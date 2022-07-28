@@ -6,9 +6,8 @@ import Filter from 'components/Filter';
 import styles from './styles.module.css';
 
 function App() {
-  const [contacts, SetContacts] = useState([]);
-
-  const [filter, SetFilter] = useState('');
+  const [contacts, setContacts] = useState([]);
+  const [filter, setFilter] = useState('');
 
   const addContact = (name, number) => {
     const contact = {
@@ -17,15 +16,15 @@ function App() {
       number,
     };
 
-    SetContacts(prevState => [contact, ...prevState]);
+    setContacts(prevState => [contact, ...prevState]);
   };
 
   const deleteContact = id => {
-    SetContacts(prevState => prevState.filter(contact => contact.id !== id));
+    setContacts(prevState => prevState.filter(contact => contact.id !== id));
   };
 
   const changeFilter = evt => {
-    SetFilter(evt.currentTarget.value);
+    setFilter(evt.currentTarget.value);
   };
 
   const filterContacts = () => {
