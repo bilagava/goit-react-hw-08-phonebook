@@ -5,8 +5,11 @@ import ContactForm from 'components/ContactForm';
 import Filter from 'components/Filter';
 import styles from './styles.module.css';
 
-function App() {
-  const [contacts, setContacts] = useState([]);
+const App = () => {
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? ''
+  );
+
   const [filter, setFilter] = useState('');
 
   const addContact = (name, number) => {
@@ -52,6 +55,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
 export default App;

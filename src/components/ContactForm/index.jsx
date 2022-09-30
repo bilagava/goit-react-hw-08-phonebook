@@ -2,18 +2,18 @@ import { useState } from 'react';
 import styles from './styles.module.css';
 import PropTypes from 'prop-types';
 
-function ContactForm({ onSubmit, arr }) {
-  const [name, SetName] = useState('');
-  const [number, SetNumber] = useState('');
+const ContactForm = ({ onSubmit, arr }) => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
   const handleNumberChange = e => {
     const currentTarget = e.currentTarget.name;
     const value = e.currentTarget.value;
     if (currentTarget === 'name') {
-      SetName(value);
+      setName(value);
     }
     if (currentTarget === 'number') {
-      SetNumber(value);
+      setNumber(value);
     }
   };
 
@@ -23,8 +23,8 @@ function ContactForm({ onSubmit, arr }) {
       alert(`${name} is alredy in contacts`);
     } else {
       onSubmit(name, number);
-      SetName('');
-      SetNumber('');
+      setName('');
+      setNumber('');
     }
   };
 
@@ -67,7 +67,7 @@ function ContactForm({ onSubmit, arr }) {
       </button>
     </form>
   );
-}
+};
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
