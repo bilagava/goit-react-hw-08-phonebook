@@ -6,9 +6,7 @@ import Filter from 'components/Filter/Filter';
 import styles from './styles.module.css';
 
 const App = () => {
-  const [contacts, setContacts] = useState(
-    () => JSON.parse(localStorage.getItem('contacts')) ?? ''
-  );
+  const [contacts, setContacts] = useState([]);
 
   const [filter, setFilter] = useState('');
 
@@ -18,6 +16,7 @@ const App = () => {
       name,
       number,
     };
+    console.log(name, number);
 
     setContacts(prevState => [contact, ...prevState]);
   };
