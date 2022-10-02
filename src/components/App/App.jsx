@@ -6,9 +6,19 @@ import Filter from 'components/Filter/Filter';
 import styles from './styles.module.css';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(localStorage.getItem('contacts')) ?? ''
+  );
 
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    const parsedContacts = JSON.parse(window.localStorage.getItem('contacts'));
+    if (parsedContacts) {
+      setContacts(parsedContacts);
+    }
+    return;
+  }, []);
 
   const addContact = (name, number) => {
     const contact = {
@@ -36,14 +46,13 @@ const App = () => {
     );
   };
 
-  useEffect(() => {
-    const parsedContacts = JSON.parse(window.localStorage.getItem('contacts'));
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    } 
-      return;
-    }
-  }, []);
+  // useEffect(() => {
+  //   const parsedContacts = JSON.parse(window.localStorage.getItem('contacts'));
+  //   if (parsedContacts) {
+  //     setContacts(parsedContacts);
+  //   }
+  //   return;
+  // }, []);
 
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
