@@ -17,20 +17,15 @@ const ContactForm = ({ onSubmit, arr }) => {
     }
   };
 
-  const checkName = () => {
-    const nameArray = arr.map(arr => arr.name.toLowerCase());
-    if (nameArray.includes(name.toLowerCase())) {
-      alert(`${name} is alredy in contacts`);
-    } else {
-      onSubmit(name, number);
-      setName('');
-      setNumber('');
-    }
+  const handleFormSubmit = event => {
+    event.preventDefault();
+    onSubmit({ name: name, number: number });
+    reset();
   };
 
-  const handleFormSubmit = e => {
-    e.preventDefault();
-    checkName();
+  const reset = () => {
+    setName('');
+    setNumber('');
   };
 
   return (

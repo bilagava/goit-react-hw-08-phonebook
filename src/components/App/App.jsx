@@ -12,14 +12,26 @@ const App = () => {
 
   const [filter, setFilter] = useState('');
 
-  const addContact = (name, number) => {
-    const contact = {
+  const addContact = ({ name, number }) => {
+    const findName = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+    if (findName) {
+      return alert(`${name} is already in contacts.`);
+    }
+
+    const findNumber = contacts.find(contact => contact.number === number);
+    if (findNumber) {
+      return alert(`This phone number is already in use.`);
+    }
+
+    const newContact = {
       id: nanoid(),
       name,
       number,
     };
 
-    setContacts(prevState => [contact, ...prevState]);
+    setContacts(contacts => [...contacts, newContact]);
   };
 
   const deleteContact = id => {
