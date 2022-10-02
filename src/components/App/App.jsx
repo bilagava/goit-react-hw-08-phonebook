@@ -12,21 +12,12 @@ const App = () => {
 
   const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    const parsedContacts = JSON.parse(window.localStorage.getItem('contacts'));
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-    return;
-  }, []);
-
   const addContact = (name, number) => {
     const contact = {
       id: nanoid(),
       name,
       number,
     };
-    console.log(name, number);
 
     setContacts(prevState => [contact, ...prevState]);
   };
@@ -45,14 +36,6 @@ const App = () => {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-
-  // useEffect(() => {
-  //   const parsedContacts = JSON.parse(window.localStorage.getItem('contacts'));
-  //   if (parsedContacts) {
-  //     setContacts(parsedContacts);
-  //   }
-  //   return;
-  // }, []);
 
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
