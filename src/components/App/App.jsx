@@ -7,8 +7,7 @@ import styles from './styles.module.css';
 
 const App = () => {
   const [contacts, setContacts] = useState(
-    []
-    // () => JSON.parse(localStorage.getItem('contacts')) ?? ''
+    () => JSON.parse(localStorage.getItem('contacts')) || []
   );
 
   const [filter, setFilter] = useState('');
