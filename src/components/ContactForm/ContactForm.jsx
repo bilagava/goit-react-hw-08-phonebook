@@ -1,10 +1,15 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { nanoid } from 'nanoid';
 import styles from './styles.module.css';
-import PropTypes from 'prop-types';
+import { add } from '../../redux/items/items-slice';
 
-const ContactForm = ({ onSubmit, arr }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const contactsValue = useSelector(state => state.items);
+  const dispatch = useDispatch();
 
   const handleNumberChange = e => {
     const currentTarget = e.currentTarget.name;
@@ -16,16 +21,17 @@ const ContactForm = ({ onSubmit, arr }) => {
       setNumber(value);
     }
   };
-
   const handleFormSubmit = e => {
     e.preventDefault();
-    onSubmit({ name, number });
-    reset();
-  };
+    const nameValue = contactsValue.map(value => value.name.toLowerCase());
 
-  const reset = () => {
-    setName('');
-    setNumber('');
+    if (nameValue.includes(name.toLowerCase())) {
+      alert(`${name} is alredy in contacts`);
+    } else {
+      dispatch(add({ name, number, id: nanoid() }));
+      setName('');
+      setNumber('');
+    }
   };
 
   return (
@@ -62,17 +68,6 @@ const ContactForm = ({ onSubmit, arr }) => {
       </button>
     </form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  arr: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
 };
 
 export default ContactForm;
