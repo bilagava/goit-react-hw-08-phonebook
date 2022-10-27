@@ -1,15 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
 import styles from './styles.module.css';
-import { add } from '../../redux/items/items-slice';
+import { addContact } from 'redux/contactsOperations';
+import { LoaderAdd } from 'components/Loader/Loader';
+import { setIsLoading } from 'redux/contactsActions';
+import Filter from '../Filter/Filter';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const contactsValue = useSelector(state => state.items);
+  const contactsValue = useSelector(state => state.entities);
   const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.isLoading);
+
+  useEffect(() => {
+    if (isLoading === 'addSuccess') {
+      alert(`You have added the contact ${name}, to your list`);
+      setName('');
+      setNumber('');
+      dispatch(setIsLoading());
+    }
+  }, [dispatch, isLoading, name]);
 
   const handleNumberChange = e => {
     const currentTarget = e.currentTarget.name;
@@ -28,9 +40,7 @@ const ContactForm = () => {
     if (nameValue.includes(name.toLowerCase())) {
       alert(`${name} is alredy in contacts`);
     } else {
-      dispatch(add({ name, number, id: nanoid() }));
-      setName('');
-      setNumber('');
+      dispatch(addContact({ name, phone: number }));
     }
   };
 
@@ -64,8 +74,9 @@ const ContactForm = () => {
       </label>
 
       <button className={styles.btn} type="submit">
-        Add Contact
+        Add Contact{isLoading === 'add' && <LoaderAdd />}
       </button>
+      <Filter />
     </form>
   );
 };
