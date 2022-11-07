@@ -4,7 +4,8 @@ import { fetchContacts } from 'redux/contactsOperations';
 import { useEffect } from 'react';
 import { ContactsItem } from './ContactsItem/ContactsItem';
 import { Loader } from 'components/Loader/Loader';
-import styles from './styles.module.css';
+import Filter from 'components/Filter/Filter';
+import styles from './ContactList.module.css';
 
 const ContactsList = () => {
   const contacts = useSelector(state => state.entities);
@@ -24,14 +25,22 @@ const ContactsList = () => {
   }, [dispatch]);
 
   return (
-    <ul className={styles.list}>
-      {contacts.length > 0
-        ? searchName().map(({ name, id, phone }) => (
-            <ContactsItem name={name} key={id} id={id} phone={phone} />
-          ))
-        : !isLoading && <p>You dont have contacts</p>}
-      {isLoading === 'fetch' && <Loader />}
-    </ul>
+    <div className={styles.contactsBox}>
+      <h2 className={styles.titleContacts}>Contacts</h2>
+      <Filter />
+      {contacts.length > 0 ? (
+        <ul className={styles.contactsList}>
+          {searchName().map(({ name, id, number }) => (
+            <ContactsItem name={name} key={id} id={id} number={number} />
+          ))}
+          {isLoading === 'fetch' && <Loader />}
+        </ul>
+      ) : (
+        !isLoading && (
+          <p className={styles.text}>You don't have saved contacts yet</p>
+        )
+      )}
+    </div>
   );
 };
 

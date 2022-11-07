@@ -1,0 +1,21 @@
+.button {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 55px;
+  height: 15px;
+  padding-left: 6px;
+  background-color: transparent;
+  border: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+  color: rgb(22, 22, 31);
+  /* color: whitesmoke; */
+  font-weight: bold;
+}
